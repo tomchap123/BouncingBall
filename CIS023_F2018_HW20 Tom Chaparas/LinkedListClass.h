@@ -11,19 +11,19 @@ public:
 	LinkedListClass();
 	~LinkedListClass();
 
-	void Add(HWND);						// append a Ball to the list
-	void Delete();						// delete the currentBall
-	void First();						// make currentBall the 1st ball in the list
-	void Next();						// advance currentBall to next ball in list
+	void Add(HWND);				// append a Ball to the list
+	void Delete();				// delete the currentBall
+	void First();				// make currentBall the 1st ball in the list
+	void Next();				// advance currentBall to next ball in list
 
-    BallClass* GetFirstBall();
+    	BallClass* GetFirstBall();
 	BallClass* GetCurrentBall();
 	void SetCurrentBall(BallClass*);
 
 private:
-    BallClass* firstBall;				// first node in list
-    BallClass* lastBall;				// last node in list
-    BallClass* currentBall;				// current node
+    BallClass* firstBall;			// first node in list
+    BallClass* lastBall;			// last node in list
+    BallClass* currentBall;			// current node
 
 };
 
