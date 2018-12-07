@@ -14,8 +14,8 @@ BallClass::BallClass()
 BallClass::BallClass(HWND hWnd)
 {
     //get client window dimensions
-    RECT rClient;							//client window
-    GetClientRect(hWnd, &rClient);			//get window dimensions
+    RECT rClient;							   //client window
+    GetClientRect(hWnd, &rClient);			   //get window dimensions
     //POINT pCenter;
     POINT pStartLocation;
 
@@ -40,10 +40,10 @@ BallClass::BallClass(HWND hWnd)
     b = GetRandomInt(0, 255);			//blue
     g = GetRandomInt(0, 255);			//green
 
-    pSpeed.x = GetRandomInt(-10, 10);	//set speed and direction horizontal
-    pSpeed.y = GetRandomInt(-10, 10);	//vertical
+    pSpeed.x = GetRandomInt(-10, 10);	    //set speed and direction horizontal
+    pSpeed.y = GetRandomInt(-10, 10);	    //vertical
 
-    iFrame = 0;							//initialize frame number
+    iFrame = 0;							    //initialize frame number
 }
 
 BallClass::~BallClass()
@@ -67,13 +67,11 @@ void BallClass::SetNextBall(BallClass* ball)
 
 void BallClass::SetPrevBall(BallClass * ball)
 {
-
     prevBall = ball;
 }
 
 void BallClass::Draw(HDC hdc)
 {
-
     //create brushes
     HBRUSH brush = CreateSolidBrush(RGB(r, g, b));
     HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, brush);
@@ -81,7 +79,6 @@ void BallClass::Draw(HDC hdc)
     //draw various shapes
     //FillRect(hdc, &rDim, brush);
     Ellipse(hdc, rDim.left, rDim.top, rDim.right, rDim.bottom);  
-
 
     SelectObject(hdc, oldBrush);					//return to original brush
     DeleteObject(brush);							//throw away brush
@@ -98,10 +95,9 @@ bool BallClass::Move(HWND hWnd)
         rDim.right++;
         rDim.bottom++;
     }
-
-    rDim.left += pSpeed.x;				//move horizontal
+    rDim.left += pSpeed.x;				        //move horizontal
     rDim.right += pSpeed.x;
-    rDim.top += pSpeed.y;				//move vertical
+    rDim.top += pSpeed.y;				        //move vertical
     rDim.bottom += pSpeed.y;
 
     //get client rectangle
@@ -115,12 +111,12 @@ bool BallClass::Move(HWND hWnd)
         rDim.bottom > rClient.bottom)
         return false;
 
-    return true;				//keep moving
+    return true;				               //keep moving
 }
 
 RECT BallClass::GetInvalidateRect()
 {
-    rReturn = rDim;						//initially the shape of the ball
+    rReturn = rDim;					       	//initially the shape of the ball
 
     if (pSpeed.x < 0)
         rReturn.right -= pSpeed.x;
@@ -139,8 +135,7 @@ int BallClass::GetRandomInt(int iLow, int iHigh)
     random_device rd;			//non-deterministic generator
     mt19937 gen(rd());			//seed mersenne twister
     uniform_int_distribution<>    dist(iLow, iHigh);
-
-
+    
     return dist(gen);			//return random #
 }
 
