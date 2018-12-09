@@ -157,13 +157,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
 
-            list->First();						//top of list
+            BallClass *currentBall = list->GetFirstBall();		//top of list
 
             //roll through list
-            while (list->GetCurrentBall() != nullptr)
+            while (currentBall != nullptr)
             {
-                list->GetCurrentBall()->Draw(hdc);		//tickle
-                list->Next();							//next Ball
+                currentBall->Draw(hdc);		                    //tickle
+                currentBall = currentBall->GetNextBall();		//next Ball
             }
        
         EndPaint(hWnd, &ps);
@@ -188,26 +188,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         else if (wParam == TIMER_MOVE)				//tickle timer
         {
-            list->First();
+           BallClass *currentBall = list->GetFirstBall();		//top of list
 
-            while (list->GetCurrentBall() != nullptr)
+            while (currentBall != nullptr)
             {
                 //tickle
-                if (!list->GetCurrentBall()->Move(hWnd))
+                if (!currentBall->Move(hWnd))
                 {
                     InvalidateRect(hWnd,
-                        &list->GetCurrentBall()->GetInvalidateRect(),
-                        FALSE);
+                    &currentBall->GetInvalidateRect(),
+                      FALSE);
 
-                    list->Delete();				//delete Ball
+                    currentBall = list->Delete(currentBall);    //delete Ball
                 }
                 else
                 {
                     InvalidateRect(hWnd,
-                        &list->GetCurrentBall()->GetInvalidateRect(),
+                        &currentBall->GetInvalidateRect(),
                         TRUE);
 
-                    list->Next();							//next Ball
+                    currentBall = currentBall->GetNextBall();	//next Ball
                 }
             }
         }
